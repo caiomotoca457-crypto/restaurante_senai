@@ -1,0 +1,79 @@
+CREATE TABLE Local (
+    id_local INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100),
+    cidade VARCHAR(100),
+    capacidade_maxima INT
+);
+
+CREATE TABLE Palestrante (
+    id_palestrante INT AUTO_INCREMENT PRIMARY KEY,
+    nome_completo VARCHAR(150),
+    area_especialidade VARCHAR(100)
+);
+
+CREATE TABLE Participante (
+    id_participante INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100),
+    email VARCHAR(100)
+);
+
+CREATE TABLE Evento (
+    id_evento INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150),
+    tipo ENUM('palestra', 'workshop', 'curso'),
+    data_realizacao DATE,
+    id_local INT,
+    id_palestrante INT,
+    FOREIGN KEY (id_local) REFERENCES Local(id_local),
+    FOREIGN KEY (id_palestrante) REFERENCES Palestrante(id_palestrante)
+);
+
+CREATE TABLE Inscricao (
+    id_inscricao INT AUTO_INCREMENT PRIMARY KEY,
+    id_evento INT,
+    id_participante INT,
+    data_inscricao DATE,
+    FOREIGN KEY (id_evento) REFERENCES Evento(id_evento),
+    FOREIGN KEY (id_participante) REFERENCES Participante(id_participante)
+);
+
+
+-- Locais
+INSERT INTO Local (nome, cidade, capacidade_maxima) VALUES
+('Centro de Convenções A', 'São Paulo', 200),
+('Auditório B', 'Rio de Janeiro', 150),
+('Espaço Tech', 'Belo Horizonte', 100),
+('Salão Prime', 'Brasília', 250),
+('Arena Pro', 'Curitiba', 300);
+
+-- Palestrantes
+INSERT INTO Palestrante (nome_completo, area_especialidade) VALUES
+('Carlos Souza', 'Tecnologia'),
+('Fernanda Lima', 'Gestão de Pessoas'),
+('Ricardo Alves', 'Marketing Digital'),
+('Juliana Pereira', 'Finanças Corporativas'),
+('Marcos Silva', 'Empreendedorismo');
+
+-- Participantes
+INSERT INTO Participante (nome, email) VALUES
+('Ana Clara', 'ana.clara@email.com'),
+('Bruno Mendes', 'bruno.m@email.com'),
+('Carla Nunes', 'carla.nunes@email.com'),
+('Daniel Costa', 'daniel.costa@email.com'),
+('Eduarda Lima', 'eduarda.lima@email.com');
+
+-- Eventos
+INSERT INTO Evento (nome, tipo, data_realizacao, id_local, id_palestrante) VALUES
+('Workshop de Inovação', 'workshop', '2025-08-10', 3, 1),
+('Palestra Motivacional', 'palestra', '2025-08-15', 1, 2),
+('Curso de Marketing Digital', 'curso', '2025-09-01', 2, 3),
+('Workshop Financeiro', 'workshop', '2025-09-20', 4, 4),
+('Palestra Empreendedora', 'palestra', '2025-10-05', 5, 5);
+
+-- Inscrições
+INSERT INTO Inscricao (id_evento, id_participante, data_inscricao) VALUES
+(1, 1, '2025-07-01'),
+(1, 2, '2025-07-02'),
+(2, 3, '2025-07-03'),
+(3, 4, '2025-07-04'),
+(4, 5, '2025-07-05');

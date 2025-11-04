@@ -1,0 +1,28 @@
+
+-(a) SELECT e.nome AS evento, l.nome AS local, p.nome_completo AS palestrante
+FROM Evento e
+JOIN Local l ON e.id_local = l.id_local
+JOIN Palestrante p ON e.id_palestrante = p.id_palestrante;
+
+-(b) SELECT par.nome, par.email
+FROM Inscricao i
+JOIN Participante par ON i.id_participante = par.id_participante
+WHERE i.id_evento = 1;
+
+-(C) SELECT e.nome AS evento, COUNT(i.id_participante) AS quantidade_participantes
+FROM Evento e
+LEFT JOIN Inscricao i ON e.id_evento = i.id_evento
+GROUP BY e.id_evento, e.nome;
+
+-(D) SELECT e.nome, l.cidade
+FROM Evento e
+JOIN Local l ON e.id_local = l.id_local
+WHERE l.cidade = 'São Paulo';
+
+-(E) SELECT nome, data_realizacao
+FROM Evento
+ORDER BY data_realizacao ASC;
+
+-(F) SELECT nome, data_realizacao
+FROM Evento
+WHERE tipo = 'workshop';
